@@ -1,4 +1,5 @@
 import os
+import shutil
 from .template import Settings
 from .fushionizer import Fusionizer
 
@@ -30,6 +31,9 @@ def main(
         debug=debug,
         mock=False)
 
+    for d in [settings.workdir, settings.outdir]:
+        os.makedirs(d, exist_ok=True)
+
     Fusionizer(settings=settings).main(
         fq1=fq1,
         fq2=fq2,
@@ -39,8 +43,10 @@ def main(
         blacklist_tsv=None if blacklist_tsv.lower() == 'none' else blacklist_tsv,
         known_fusions_tsv=None if known_fusions_tsv.lower() == 'none' else known_fusions_tsv,
         protein_domains_gff3=None if protein_domains_gff3.lower() == 'none' else protein_domains_gff3,
-        cytobands_tsv=None if cytobands_tsv.lower() == 'none' else cytobands_tsv,
-    )
+        cytobands_tsv=None if cytobands_tsv.lower() == 'none' else cytobands_tsv)
+
+    if not settings.debug:
+        shutil.rmtree(settings.workdir)
 
 
 def get_temp_path(
