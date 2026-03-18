@@ -107,6 +107,8 @@ class Arriba(Processor):
             f'-@ {self.threads}',
             f'-o {self.sorted_bam}',
             self.unsorted_bam,
+            f'1> {self.outdir}/samtools_sort.log',
+            f'2> {self.outdir}/samtools_sort.log',
         ]
         self.call(self.CMD_LINEBREAK.join(lines))
         self.call(f'samtools index {self.sorted_bam}')
