@@ -1,3 +1,4 @@
+import os
 from typing import Optional
 from .arriba import Arriba
 from .template import Processor
@@ -46,5 +47,11 @@ class Fusionizer(Processor):
             blacklist_tsv=self.blacklist_tsv,
             known_fusions_tsv=self.known_fusions_tsv,
             protein_domains_gff3=self.protein_domains_gff3,
-            cytobands_tsv=self.cytobands_tsv,
-        )
+            cytobands_tsv=self.cytobands_tsv)
+
+        self.collect_log_files()
+
+    def collect_log_files(self):
+        os.makedirs(f'{self.outdir}/log', exist_ok=True)
+        cmd = f'mv "{self.outdir}"/*.log "{self.outdir}"/log/'
+        self.call(cmd)

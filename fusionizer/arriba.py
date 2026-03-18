@@ -127,4 +127,9 @@ class Arriba(Processor):
         if self.protein_domains_gff3 is not None:
             lines += [f'--proteinDomains={self.protein_domains_gff3}']
 
+        lines += [
+            f'1> {self.outdir}/draw_fusions.log',
+            f'2> {self.outdir}/draw_fusions.log',
+        ]
+
         self.call(self.CMD_LINEBREAK.join(lines))
